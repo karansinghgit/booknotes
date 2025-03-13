@@ -10,6 +10,73 @@ What's the request flow in there?
  * HTTP requests are sent directly to server (via its IP) from your device
  * Server returns HTML pages or JSON payloads, used for rendering.
 
+pplx --
+> The web request flow you've described involves three main stages: DNS
+> resolution, HTTP request transmission, and server response processing.
+> Let me break down each stage in greater detail:
+> 
+> ## DNS Resolution (Domain Name to IP Address)
+> 
+> When you type a domain name like api.mysite.com into your browser, a
+> DNS lookup process begins:
+> 
+> 1. **Local DNS Cache Check**: Your browser first checks its own cache to see if it already knows the IP address[1][9].
+> 
+> 2. **Operating System Check**: If not found in browser cache, your computer checks its local OS cache[9].
+> 
+> 3. **Recursive DNS Query**: If still not found, a request is sent to a DNS resolver (typically provided by your ISP)[5][9].
+> 
+> 4. **DNS Resolver Processing**: The recursive resolver follows these steps:
+>    - Checks its own cache for the information[5]
+>    - If not cached, it queries a DNS root nameserver[5][9]
+>    - The root server directs to the appropriate Top-Level Domain (TLD) server (.com, .org, etc.)[5]
+>    - The TLD server directs to the authoritative nameserver for your domain[1][5]
+>    - The authoritative nameserver provides the actual IP address for api.mysite.com[1][5]
+> 
+> 5. **Response Return**: The IP address (e.g., 15.125.23.214) is returned through the chain back to your device[1][9].
+> 
+> Each step typically takes milliseconds to complete, with the entire
+> process being nearly imperceptible to users[5].
+> 
+> ## HTTP Request Transmission
+> 
+> Once your browser has the IP address:
+> 
+> 1. **TCP Connection**: Your browser establishes a TCP connection with the web server at the IP address[6][10].
+> 
+> 2. **HTTP Request Construction**: Your browser creates an HTTP request message containing:
+>    - A request line with method (GET, POST, etc.), URL path, and HTTP version[3][18]
+>    - Headers containing metadata (like Host, User-Agent, Accept-Language)[3][6]
+>    - An optional message body (typically used with POST requests)[2][3]
+> 
+> 3. **Request Transmission**: The request is handed off to your ISP and routed through the internet to reach the server[10][15].
+> 
+> ## Server Response Processing
+> 
+> When the server receives your request:
+> 
+> 1. **Request Processing**: The server validates the request and processes it according to the requested method[2][10].
+> 
+> 2. **Response Generation**: The server creates an HTTP response containing:
+>    - A status line with HTTP version, status code (200, 404, etc.), and status text[3][7]
+>    - Headers with metadata (Content-Type, Date, Server, etc.)[3][7]
+>    - A message body containing the requested resource (HTML page, JSON data, etc.)[2][3][7]
+> 
+> 3. **Response Transmission**: The server sends the response back through the internet to your device[6][10].
+> 
+> 4. **Response Processing**: Your browser receives and processes the response based on the Content-Type:
+>    - For HTML: The browser renders the page, making additional requests for embedded resources
+>    - For JSON: The data is processed according to your application's needs[3][7]
+> 
+> This entire request-response cycle can happen multiple times during a
+> single page load as your browser requests additional resources like
+> images, CSS files, and JavaScript[6].
+> 
+> Using third-party DNS providers (like Cloudflare, Google DNS, or your
+> domain registrar) is common practice because they offer reliability,
+> performance, and security benefits without requiring you to maintain
+> your own DNS infrastructure[4][9].
+
 Traffic to web server comes from either a web application or a mobile application:
  * Web applications use a combo of server-side languages (ie Java, Python) to handle business logic & storage. Client-side languages (ie HTML, JS) are used for presentation.
  * Mobile apps use the HTTP protocol for communication between mobile & the web server. JSON is used for formatting transmitted data. Example payload:
